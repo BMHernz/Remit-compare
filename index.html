@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta name="description" content="Compara las mejores tasas de remesas a Honduras, Guatemala y El Salvador. Ahorra dinero en cada envío.">
+    <meta property="og:title" content="RemitCompare | Envía más dinero a casa">
+    <meta property="og:description" content="Encuentra la mejor tasa de cambio y las comisiones más bajas al instante.">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="https://yourwebsite.com/preview.jpg">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RemitCompare - Compara Remesas a Centroamérica</title>
+    <style>
+        :root {
+            --brand-blue: #b3d9e0;
+            --dark-blue: #2c3e50;
+            --success-green: #27ae60;
+            --light-gray: #f8fafb;
+            --border-color: #e2e8f0;
+        }
+        
+        body { 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            margin: 0; 
+            background-color: var(--light-gray); 
+            color: #333; 
+            line-height: 1.6; 
+            scroll-behavior: smooth; 
+        }
+
+        /* --- NAVIGATION --- */
+        nav { 
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 12px 5%; 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            box-shadow: 0 2px 15px rgba(0,0,0,0.03); 
+            position: sticky; 
+            top: 0; 
+            z-index: 1000; 
+        }
+        .logo-container { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+        .logo-icon { 
+            width: 35px; height: 35px; background: var(--dark-blue); 
+            border-radius: 10px; display: flex; align-items: center; 
+            justify-content: center; color: white; font-weight: 900; font-size: 20px; 
+        }
+        .logo-text { font-size: 1.4em; font-weight: 800; color: var(--dark-blue); letter-spacing: -0.5px; }
+        .logo-text span { color: var(--success-green); }
+
+        .nav-links a { 
+            margin-left: 20px; text-decoration: none; color: var(--dark-blue); 
+            font-weight: 600; font-size: 0.9em; padding: 8px 15px; 
+            border-radius: 8px; transition: 0.3s; 
+        }
+        .nav-links a:hover { background: var(--brand-blue); }
+
+        /* --- HEADER & LAYOUT --- */
+        .header { background-color: var(--brand-blue); padding: 80px 20px; text-align: center; color: var(--dark-blue); }
+        .container { 
+            max-width: 1000px; margin: -50px auto 40px; background: white; 
+            padding: 40px; border-radius: 20px; box-shadow: 0 15px 35px rgba(0,0,0,0.08); 
+        }
+        
+        .last-updated { font-size: 0.85em; color: #7f8c8d; text-align: center; margin-bottom: 25px; font-weight: 500; }
+
+        /* --- INPUTS & SELECTORS --- */
+        .selector-group { 
+            display: flex; justify-content: center; flex-wrap: wrap; gap: 25px; 
+            margin-bottom: 35px; background: #fdfdfd; padding: 25px; 
+            border-radius: 15px; border: 1px solid #edf2f7; 
+        }
+        .input-box { display: flex; flex-direction: column; gap: 8px; }
+        select, input, textarea { 
+            padding: 14px; border: 2px solid var(--border-color); 
+            border-radius: 10px; font-size: 16px; transition: 0.3s; width: 100%; box-sizing: border-box; 
+        }
+        select:focus, input:focus { border-color: var(--brand-blue); outline: none; }
+
+        /* Quick Amount Pills */
+        .quick-amounts { display: flex; gap: 8px; margin-top: 10px; }
+        .btn-qty { 
+            flex: 1; background: #f1f5f9; border: 1px solid #e2e8f0; 
+            padding: 6px; border-radius: 8px; font-size: 0.8em; 
+            font-weight: 600; cursor: pointer; transition: 0.2s; 
+        }
+        .btn-qty:hover { background: var(--brand-blue); border-color: var(--brand-blue); transform: translateY(-1px); }
+
+        #country-tip { 
+            background-color: #fff9db; padding: 18px; border-left: 5px solid #fcc419; 
+            margin-bottom: 30px; border-radius: 8px; font-size: 0.95em; 
+        }
+
+        /* --- TABLE & INTERACTIVITY --- */
+        .table-wrapper { overflow-x: auto; }
+        table { width: 100%; border-collapse: collapse; margin-bottom: 50px; }
+        th { 
+            text-align: left; padding: 18px; border-bottom: 2px solid var(--brand-blue); 
+            color: var(--dark-blue); font-size: 0.8em; text-transform: uppercase; letter-spacing: 1px; 
+        }
+        td { padding: 25px 18px; border-bottom: 1px solid #f1f5f9; vertical-align: middle; transition: 0.2s; }
+        
+        /* The Lift Effect */
+        tbody tr { transition: all 0.2s ease; }
+        tbody tr:hover { 
+            background-color: #ffffff; transform: scale(1.01); 
+            box-shadow: 0 8px 20px rgba(0,0,0,0.06); position: relative; z-index: 5; 
+        }
+
+        .total { font-weight: 800; color: var(--success-green); font-size: 1.3em; }
+        .delivery-time { font-size: 0.85em; color: #718096; display: block; margin-top: 4px; }
+        
+        .btn-affiliate { 
+            background: var(--dark-blue); color: white; padding: 12px 22px; 
+            border-radius: 10px; text-decoration: none; font-weight: bold; transition: 0.3s; 
+        }
+        .btn-affiliate:hover { background: var(--success-green); transform: translateY(-2px); }
+
+        /* --- FAQ & CONTACT --- */
+        .faq-section { margin-top: 80px; }
+        .faq-item { background: #fff; margin-bottom: 12px; border-radius: 10px; border: 1px solid #edf2f7; overflow: hidden; }
+        .faq-question { padding: 18px 25px; cursor: pointer; font-weight: 700; display: flex; justify-content: space-between; align-items: center; }
+        .faq-answer { padding: 0 25px; max-height: 0; overflow: hidden; transition: max-height 0.3s ease-out; color: #4a5568; }
+
+        .contact-section { margin-top: 80px; padding-top: 40px; border-top: 2px solid #f1f5f9; }
+        .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; }
+        @media (max-width: 768px) { .contact-grid { grid-template-columns: 1fr; } }
+        
+        .btn-submit { 
+            background: var(--success-green); color: white; border: none; 
+            padding: 15px; border-radius: 10px; font-weight: bold; cursor: pointer; transition: 0.3s; 
+        }
+        .btn-submit:hover { background: #1e8449; transform: translateY(-2px); }
+
+        footer { text-align: center; padding: 60px 40px; color: #a0aec0; font-size: 0.9em; background: #fff; border-top: 1px solid #eee; }
+        
+        @media (max-width: 600px) {
+        .table-wrapper::after {
+        content: "⬅ Desliza para ver más ➡";
+        display: block;
+        text-align: center;
+        font-size: 0.7em;
+        color: #a0aec0;
+        margin-top: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<nav>
+    <a href="#" class="logo-container">
+        <div class="logo-icon">R</div>
+        <div class="logo-text">Remit<span>Compare</span></div>
+    </a>
+    <div class="nav-links">
+        <a href="#comparar">Comparar</a>
+        <a href="#faq">Preguntas</a>
+        <a href="#contacto">Contacto</a>
+    </div>
+</nav>
+
+<div class="header" id="comparar">
+    <h1>Envía más dinero a casa</h1>
+    <p>Comparamos tasas para Honduras, Guatemala y El Salvador al instante.</p>
+</div>
+
+<div class="container">
+    <p class="last-updated" id="date-display"></p>
+
+    <div class="selector-group">
+        <div class="input-box">
+            <label>País de Destino:</label>
+            <select id="country" onchange="updateRates()">
+                <option value="HNL">🇭🇳 Honduras (Lempiras)</option>
+                <option value="GTQ">🇬🇹 Guatemala (Quetzales)</option>
+                <option value="SVC">🇸🇻 El Salvador (Dólares)</option>
+            </select>
+        </div>
+        <div class="input-box">
+            <label>Cantidad a enviar (USD):</label>
+            <input type="number" id="amount" value="500" oninput="updateRates()">
+            <div class="quick-amounts">
+                <button class="btn-qty" onclick="setAmount(300)">$300</button>
+                <button class="btn-qty" onclick="setAmount(500)">$500</button>
+                <button class="btn-qty" onclick="setAmount(1000)">$1000</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="country-tip"></div>
+
+    <div class="table-wrapper">
+        <table>
+            <thead>
+                <tr>
+                    <th>Proveedor</th>
+                    <th>Tasa / Tiempo</th>
+                    <th>Comisión</th>
+                    <th>Total Estimado</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody id="table-body"></tbody>
+        </table>
+    </div>
+
+    <div class="faq-section" id="faq">
+        <h2 style="text-align: center; margin-bottom: 30px;">Preguntas Frecuentes</h2>
+        <div class="faq-item">
+            <div class="faq-question" onclick="toggleFaq(this)">¿Es seguro usar RemitCompare? <span>+</span></div>
+            <div class="faq-answer"><p>Sí. Solo comparamos empresas autorizadas y seguras. Tu dinero va directamente a través del proveedor oficial.</p></div>
+        </div>
+        <div class="faq-item">
+            <div class="faq-question" onclick="toggleFaq(this)">¿Por qué varían las cantidades? <span>+</span></div>
+            <div class="faq-answer"><p>Las tasas de cambio y comisiones cambian diariamente. Siempre verifica el monto final en el sitio del proveedor.</p></div>
+        </div>
+    </div>
+
+    <div class="contact-section" id="contacto">
+        <div class="contact-grid">
+            <div class="contact-info">
+                <h3>¿Dudas o Sugerencias?</h3>
+                <p>Ayúdanos a mejorar. Escríbenos si quieres que agreguemos un nuevo país o servicio.</p>
+                <p>📧 <strong>soporte@remitcompare.com</strong></p>
+            </div>
+            <div>
+                <form class="contact-form" action="https://formspree.io/f/mkopbebl" method="POST" style="display:flex; flex-direction:column; gap:15px;">
+                    <input type="text" name="name" placeholder="Tu nombre" required>
+                    <input type="email" name="email" placeholder="Tu correo" required>
+                    <textarea name="message" rows="3" placeholder="¿En qué te ayudamos?" required></textarea>
+                    <button type="submit" class="btn-submit">Enviar Mensaje</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<footer>
+    <div style="max-width: 800px; margin: 0 auto;">
+        <p>&copy; 2026 RemitCompare. Hecho para la comunidad de Centroamérica.</p>
+        <p style="font-size: 0.75em; color: #cbd5e0; line-height: 1.4;">
+            <strong>Aviso:</strong> Las tasas y comisiones mostradas son estimaciones basadas en datos públicos de los proveedores. 
+            RemitCompare no procesa pagos. Verifique siempre los términos finales en el sitio oficial del proveedor antes de realizar su envío.
+        </p>
+    </div>
+</footer>
+
+<script>
+    // --- SETTINGS & DATA ---
+    const exchangeRates = { HNL: 26.68, GTQ: 7.82, SVC: 1.00 };
+    const countryTips = {
+        HNL: "💡 <strong>Tip:</strong> Recomendamos Ria o Remitly para retiros rápidos en Honduras.",
+        GTQ: "💡 <strong>Tip:</strong> Banrural tiene la red más grande para retiros en Guatemala.",
+        SVC: "💡 <strong>Tip:</strong> Busca el sello de '$0 Fee' para maximizar tu envío a El Salvador."
+    };
+
+    const providers = [
+        { name: 'Ria Transfer', fee: 0.00, domain: 'riamoneytransfer.com', markup: 0.008, speed: '15-30 min', link: '#' },
+        { name: 'Remitly', fee: 3.99, domain: 'remitly.com', markup: 0.012, speed: 'Al instante', link: '#' },
+        { name: 'Western Union', fee: 0.00, domain: 'westernunion.com', markup: 0.022, speed: 'Minutos', link: '#' },
+        { name: 'Wise', fee: 7.25, domain: 'wise.com', markup: 0.003, speed: '1-2 días', link: '#' },
+        { name: 'Félix Pago', fee: 2.99, domain: 'felixpago.com', markup: 0.011, speed: 'Vía WhatsApp', link: '#' }
+    ];
+
+    // --- CORE LOGIC ---
+    function setAmount(val) {
+        document.getElementById('amount').value = val;
+        updateRates();
+    }
+
+    function updateRates() {
+        const usd = document.getElementById('amount').value;
+        const country = document.getElementById('country').value;
+        const baseRate = exchangeRates[country];
+        const tbody = document.getElementById('table-body');
+        document.getElementById('country-tip').innerHTML = countryTips[country];
+        
+        tbody.innerHTML = '';
+
+        const results = providers.map(p => {
+            const finalRate = (baseRate * (1 - p.markup)).toFixed(4);
+            const total = ((usd - p.fee) * finalRate).toFixed(2);
+            return { ...p, finalRate, total };
+        }).sort((a, b) => b.total - a.total);
+
+        results.forEach((item, index) => {
+            const symbol = country === 'SVC' ? '$' : (country === 'HNL' ? 'L' : 'Q');
+            const badge = index === 0 ? '<div style="background:#ffd700; font-size:10px; padding:3px 8px; border-radius:5px; display:inline-block; margin-bottom:8px; font-weight:bold; color:#000;">LA MEJOR TASA 🏆</div>' : '';
+            
+            tbody.innerHTML += `
+                <tr>
+                    <td>
+                        <img src="https://logo.clearbit.com/${item.domain}" style="width:25px; vertical-align:middle; margin-right:10px; border-radius:4px;">
+                        <strong>${item.name}</strong><br>${badge}
+                    </td>
+                    <td><strong>${symbol} ${item.finalRate}</strong><br><span class="delivery-time">⏰ ${item.speed}</span></td>
+                    <td>$${item.fee}</td>
+                    <td class="total">${symbol} ${item.total}</td>
+                    <td><a href="${item.link}" class="btn-affiliate">Enviar</a></td>
+                </tr>
+            `;
+        });
+    }
+
+    // --- FAQ TOGGLE ---
+    function toggleFaq(element) {
+        const answer = element.nextElementSibling;
+        const span = element.querySelector('span');
+        if (answer.style.maxHeight) {
+            answer.style.maxHeight = null;
+            span.innerText = "+";
+            answer.style.padding = "0 25px";
+        } else {
+            answer.style.maxHeight = answer.scrollHeight + "px";
+            span.innerText = "-";
+            answer.style.padding = "10px 25px 20px";
+        }
+    }
+
+    // Set Initial Date
+    const options = { year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit' };
+    document.getElementById('date-display').innerHTML = "Actualizado: " + new Date().toLocaleDateString('es-ES', options);
+
+    updateRates();
+</script>
+
+</body>
+</html>
