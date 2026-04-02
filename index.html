@@ -28,14 +28,11 @@
         }
 
         /* --- NAVIGATION --- */
-        nav { 
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            padding: 12px 5%; 
-            display: flex; 
-            justify-content: space-between; 
-            align-items: center; 
-            box-shadow: 0 2px 15px rgba(0,0,0,0.03); 
+       nav { 
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(15px); /* Stronger blur for that Apple-style glass look */
+            border-bottom: 1px solid rgba(0,0,0,0.05); /* Very faint line to separate it from content */
+            padding: 10px 5%; 
             position: sticky; 
             top: 0; 
             z-index: 1000; 
@@ -170,6 +167,30 @@
         .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; }
         @media (max-width: 768px) { .contact-grid { grid-template-columns: 1fr; } }
         
+        @media (max-width: 600px) {
+            /* This removes the extra padding on the sides so the table has more room */
+            .container {
+            padding: 20px 10px; 
+            }
+    
+            /* Make the font in the headers even smaller so they fit */
+            th {
+            font-size: 0.65em;
+            padding: 10px 5px;
+            }
+    
+            /* Ensure the table doesn't try to be wider than the phone screen */
+            table {
+            width: 100%;
+            table-layout: fixed; /* This forces columns to respect the width */
+            }
+
+            /* Set specific widths for columns so they stay organized */
+            th:nth-child(1) { width: 35%; } /* Proveedor */
+            th:nth-child(2) { width: 25%; } /* Tasa */
+            th:nth-child(3) { width: 15%; } /* Comi */
+            th:nth-child(4) { width: 25%; } /* Total/Boton */
+        }
         .btn-submit { 
             background: var(--success-green); color: white; border: none; 
             padding: 15px; border-radius: 10px; font-weight: bold; cursor: pointer; transition: 0.3s; 
