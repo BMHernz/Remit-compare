@@ -35,8 +35,16 @@
             padding: 10px 5%; 
             position: sticky; 
             top: 0; 
-            z-index: 1000; 
+            z-index: 1000;
+            padding: 10px 15px;
+            flex-direction: row; /* Force them to stay side-by-side */
+            justify-content: space-between; 
         }
+        .nav-links {
+            display: flex;
+            gap: 8px; /* Tighten the space between links */
+        }
+
         .logo-container { display: flex; align-items: center; gap: 12px; text-decoration: none; }
         .logo-icon { 
             width: 35px; height: 35px; background: var(--dark-blue); 
@@ -47,9 +55,14 @@
         .logo-text span { color: var(--success-green); }
 
         .nav-links a { 
-            margin-left: 20px; text-decoration: none; color: var(--dark-blue); 
-            font-weight: 600; font-size: 0.9em; padding: 8px 15px; 
-            border-radius: 8px; transition: 0.3s; 
+            margin-left: 0; 
+            font-size: 12px; /* Smaller text for mobile */
+            padding: 5px 8px; 
+        }
+        /* If the logo is too big, shrink it slightly on mobile */
+        @media (max-width: 480px) {
+        .logo-text { font-size: 1.1em; }
+        .logo-icon { width: 28px; height: 28px; font-size: 16px; }
         }
         .nav-links a:hover { background: var(--brand-blue); }
 
@@ -136,9 +149,21 @@
         .table-wrapper { overflow-x: auto; }
         table { width: 100%; border-collapse: collapse; margin-bottom: 50px; }
         th { 
-            text-align: left; padding: 18px; border-bottom: 2px solid var(--brand-blue); 
-            color: var(--dark-blue); font-size: 0.8em; text-transform: uppercase; letter-spacing: 1px; 
+            text-align: left; 
+            padding: 10px 5px; 
+            border-bottom: 2px solid var(--brand-blue); 
+            color: var(--dark-blue); 
+            font-size: 10px; /* Smaller for mobile */
+            text-transform: uppercase; 
+            letter-spacing: 0.5px;
+            vertical-align: bottom;
         }
+
+        /* Specific fix for the overlap */
+        th:nth-child(3), th:nth-child(4) {
+        text-align: right; /* Align numbers to the right for better reading */
+        }
+
         td { padding: 25px 18px; border-bottom: 1px solid #f1f5f9; vertical-align: middle; transition: 0.2s; }
         
         /* The Lift Effect */
@@ -171,6 +196,22 @@
             /* This removes the extra padding on the sides so the table has more room */
             .container {
             padding: 20px 10px; 
+            }
+
+            table {
+                table-layout: fixed; /* This is the "magic" fix */
+                width: 100%;
+            }
+
+            th:nth-child(1), td:nth-child(1) { width: 40%; } /* Provider name & logo */
+            th:nth-child(2), td:nth-child(2) { width: 25%; } /* Rate & Time */
+            th:nth-child(3), td:nth-child(3) { width: 15%; } /* Fee (Comisión) */
+            th:nth-child(4), td:nth-child(4) { width: 20%; } /* Total */
+
+            /* Make the total column text smaller to avoid cutting off */
+            .total {
+                font-size: 14px !important;
+                text-align: right;
             }
     
             /* Make the font in the headers even smaller so they fit */
