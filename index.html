@@ -193,44 +193,44 @@
         @media (max-width: 768px) { .contact-grid { grid-template-columns: 1fr; } }
         
         @media (max-width: 600px) {
-            /* This removes the extra padding on the sides so the table has more room */
+            /* 1. Give the container more room */
             .container {
-            padding: 20px 10px; 
+                padding: 15px 8px;
             }
 
+            /* 2. Fix the Table Layout */
             table {
-                table-layout: fixed; /* This is the "magic" fix */
+                table-layout: fixed;
                 width: 100%;
             }
 
-            th:nth-child(1), td:nth-child(1) { width: 40%; } /* Provider name & logo */
-            th:nth-child(2), td:nth-child(2) { width: 25%; } /* Rate & Time */
-            th:nth-child(3), td:nth-child(3) { width: 15%; } /* Fee (Comisión) */
-            th:nth-child(4), td:nth-child(4) { width: 20%; } /* Total */
+            /* 3. Set the 4 column widths */
+            th:nth-child(1), td:nth-child(1) { width: 35%; } /* Proveedor */
+            th:nth-child(2), td:nth-child(2) { width: 25%; } /* Tasa / Tiempo */
+            th:nth-child(3), td:nth-child(3) { width: 15%; } /* Comisión */
+            th:nth-child(4), td:nth-child(4) { width: 25%; } /* Total + Botón */
 
-            /* Make the total column text smaller to avoid cutting off */
+            /* 4. Small font for headers so they don't overlap */
+            th {
+                font-size: 10px;
+                padding: 10px 5px;
+                text-transform: uppercase;
+            }
+
+            /* 5. Style the Total and the Button */
             .total {
                 font-size: 14px !important;
+                font-weight: bold;
                 text-align: right;
-            }
-    
-            /* Make the font in the headers even smaller so they fit */
-            th {
-            font-size: 0.65em;
-            padding: 10px 5px;
-            }
-    
-            /* Ensure the table doesn't try to be wider than the phone screen */
-            table {
-            width: 100%;
-            table-layout: fixed; /* This forces columns to respect the width */
+                display: block;
+                margin-bottom: 5px;
             }
 
-            /* Set specific widths for columns so they stay organized */
-            th:nth-child(1) { width: 35%; } /* Proveedor */
-            th:nth-child(2) { width: 25%; } /* Tasa */
-            th:nth-child(3) { width: 15%; } /* Comi */
-            th:nth-child(4) { width: 25%; } /* Total/Boton */
+            .btn-affiliate {
+                display: inline-block;
+                padding: 5px 10px;
+                font-size: 11px;
+            }
         }
         .btn-submit { 
             background: var(--success-green); color: white; border: none; 
@@ -303,9 +303,7 @@
                     <th>Proveedor</th>
                     <th>Tasa / Tiempo</th>
                     <th>Comisión</th>
-                    <th>Total Estimado</th>
-                    <th></th>
-                </tr>
+                    <th style="text-align:right;">Total</th> </tr>
             </thead>
             <tbody id="table-body"></tbody>
         </table>
@@ -392,28 +390,32 @@
 
         results.forEach((item, index) => {
             const symbol = country === 'SVC' ? '$' : (country === 'HNL' ? 'L' : 'Q');
-            const badge = index === 0 ? '<div style="background:#ffd700; font-size:10px; padding:3px 8px; border-radius:5px; display:inline-block; margin-bottom:8px; font-weight:bold; color:#000;">LA MEJOR TASA 🏆</div>' : '';
-            
-           tbody.innerHTML += `
-               <tr>
-                   <td>
-                       <div class="logo-column">
-                           <img src="https://www.google.com/s2/favicons?sz=64&domain=${item.domain}" style="width:28px; height:28px; border-radius:4px;">
-                           <div class="provider-name">
-                               ${index === 0 ? '<span class="badge-best">MEJOR TASA</span><br>' : ''}
-                               ${item.name}
+    
+            tbody.innerHTML += `
+                <tr>
+                    <td>
+                        <div class="logo-column">
+                            <img src="https://www.google.com/s2/favicons?sz=64&domain=${item.domain}" style="width:24px; height:24px; border-radius:4px;">
+                            <div class="provider-name">
+                                ${index === 0 ? '<span class="badge-best">MEJOR TASA</span><br>' : ''}
+                                ${item.name}
                            </div>
-                       </div>
-                   </td>
-                   <td>
-                       <strong>${symbol} ${item.finalRate}</strong>
-                       <span class="delivery-time">⏰ ${item.speed}</span>
-                   </td>
-                   <td style="font-size: 0.85em;">$${item.fee}</td>
-                   <td class="total" style="font-size: 1.1em;">${symbol}${item.total}</td>
-                   <td><a href="${item.link}" class="btn-affiliate">Enviar</a></td>
-               </tr>
-           `;
+                        </div>
+                    </td>
+            
+                    <td>
+                        <div style="font-weight:bold;">${symbol}${item.finalRate}</div>
+                        <div class="delivery-time">⏰ ${item.speed}</div>
+                    </td>
+            
+                    <td style="font-size: 0.85em; text-align:center;">$${item.fee}</td>
+            
+                    <td style="text-align: right;">
+                        <div class="total">${symbol}${item.total}</div>
+                        <a href="${item.link}" class="btn-affiliate">Enviar</a>
+                    </td>
+                </tr>
+            `;
         });
     }
 
